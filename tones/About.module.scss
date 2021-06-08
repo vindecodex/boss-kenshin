@@ -1,0 +1,70 @@
+.info {
+  padding: 20px 10px;
+  text-align: center;
+  margin: 30px 0;
+  small {
+    color: #6c6c6c;
+    font-size: 18px;
+  }
+}
+
+.myQoute {
+  font-size: 25px;
+  font-style: italic;
+  padding: 30px 10px;
+  margin: 30px 0;
+  background: #000;
+  text-align: center;
+  p {
+    white-space: pre-line;
+    color: #ececec;
+  }
+  small {
+    display: block;
+    color: grey;
+    margin: 20px 0 0;
+  }
+}
+.myName {
+  font-size: 30px;
+  text-align: center;
+  margin: 10px 0;
+}
+.links {
+  padding: 30px 10px;
+  ul {
+    display: flex;
+    justify-content: center;
+    li {
+      list-style-type: none;
+      margin: 0 5px;
+      a {
+        border: 1px solid #6c6c6c;
+        padding: 10px;
+        color: #6c6c6c;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 20px;
+
+        &:hover {
+          background: #ececec;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .links {
+    ul {
+      flex-direction: column;
+      li {
+        margin: 5px 0;
+        a {
+          display: block;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

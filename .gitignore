@@ -1,0 +1,12 @@
+# dot files
+env.js
+.env
+
+# next
+.next/
+
+# sanity
+sanity/
+
+# dependencies
+node_modules/
