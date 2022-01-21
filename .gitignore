@@ -2,6 +2,9 @@
 env.js
 .env
 
+# test
+coverge/
+
 # next
 .next/
 
