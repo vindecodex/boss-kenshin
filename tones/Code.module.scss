@@ -1,5 +1,10 @@
 span.__code {
-  color: #f87d7d;
-  background: #ececec;
+	display: block;
+	border-left: 5px solid #000;
+	font-style: italic;
+	color: #f87d7d;
+	padding: 10px;
+	background: #ececec;
+	margin: 20px 0;
 }
 

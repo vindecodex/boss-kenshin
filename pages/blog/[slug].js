@@ -1,51 +1,57 @@
 import Head from 'next/head';
-import CodeBlock from '../../elements/CodeBlock';
-import Code from '../../elements/Code';
-import Paragraph from '../../elements/Paragraph';
-import getTitles from '../../mediator/calls/get_titles';
-import getBlog from '../../mediator/calls/get_blog';
-import styles from '../../tones/Blog.module.scss';
+import dynamic from 'next/dynamic';
+import opt from '@elements/DynamicImport';
+import styles from '@tones/Blog.module.scss';
+import getBlogsSlugAndTitle from '@mediator/calls/blogs';
+import getBlog from '@mediator/calls/blog';
+
+const CodeBlock = dynamic(() => import('@elements/CodeBlock'), opt);
+const Code = dynamic(() => import('@elements/Code'), opt);
+const Paragraph = dynamic(() => import('@elements/Paragraph'), opt);
+const Strong = dynamic(() => import('@elements/Strong'), opt);
 
 export async function getStaticPaths() {
-  const x = await getTitles();
+	const blogs = await getBlogsSlugAndTitle();
 
-  const paths = x.result.map(y => ({
-    params: { slug: y.slug.current }
-  }))
+	const paths = blogs.result.map(blog => ({
+		params: { slug: blog.slug.current }
+	}))
 
-  return { paths, fallback: false }
+	return { paths, fallback: false }
 }
 
 export async function getStaticProps({ params }) {
-  const x = await getBlog(params.slug);
-  return {
-    props: x
-  }
+	const blog = await getBlog(params.slug);
+	return {
+		props: blog
+	}
 }
 
-const Blog = ({ result }) => {
-  return (
-    <>
-    <Head>
-      <title>Blog | {result[0].title}</title>
-    </Head>
-    <h1 className={styles.title}>{ result[0].title }</h1>
-    <div className={styles.content}>
-    {
-      result[0].body.map(b => {
-          if (b._type == 'block') {
-            if (!b.children[0].marks.length)
-              return <Paragraph z={b.children[0].text} key={b._key}/>
-            if (b.children[0].marks[0] == 'code')
-              return <Code z={b.children[0].text} key={b._key}/>
-          }
-          if (b._type == 'code')
-            return <CodeBlock z={b.code} l={b.language} key={b._key}/>
-      })
-    }
-    </div>
-    </>
-  )
+const Blog = ( blog ) => {
+	return (
+		<>
+			<Head>
+				<title>Blog | {blog.result[0].title}</title>
+			</Head>
+			<h1 className={styles.title}>{ blog.result[0].title }</h1>
+			<div className={styles.content}>
+			{
+				blog.result[0].body.map(content => {
+					if (content._type == 'block') {
+						if (!content.children[0].marks.length)
+							return <Paragraph content={content.children[0].text} key={content._key}/>
+								if (content.children[0].marks[0] == 'code')
+							return <Code codeContent={content.children[0].text} key={content._key}/>
+								if (content.children[0].marks[0] == 'strong')
+							return <Strong content={content.children[0].text} key={content._key} />
+					}
+					if (content._type == 'code')
+						return <CodeBlock codeContent={content.code} programmingLanguage={content.language} key={content._key}/>
+				})
+			}
+			</div>
+		</>
+	)
 }
 
 export default Blog;

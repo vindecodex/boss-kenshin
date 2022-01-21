@@ -1,8 +1,8 @@
-import styles from '../tones/Code.module.scss';
-const Code = ({ z }) => {
-  return (
-    <span className={styles.__code}>{ z }</span>
-  )
+import styles from '@tones/Code.module.scss';
+const Code = ({ codeContent }) => {
+	return (
+		<span className={styles.__code}>{ codeContent }</span>
+	)
 }
 
 export default Code;
